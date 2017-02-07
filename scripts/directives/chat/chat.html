@@ -1,0 +1,46 @@
+<div class="chatbox chatbox--tray">
+    <div class="chatbox__title button-backgrond">
+        <h5><a href="#">Chat</a></h5>
+        <button class="chatbox__title__refresh"><span class="fa fa-heart-o" rel="tooltip" title="Liked"></span></button>
+
+            <button class="chatbox__title__tray">
+                <span></span>
+            </button>
+            <button class="chatbox__title__close">
+                <span>
+                    <svg viewBox="0 0 12 12" width="12px" height="12px">
+                        <line stroke="#FFFFFF" x1="11.75" y1="0.25" x2="0.25" y2="11.75"></line>
+                        <line stroke="#FFFFFF" x1="11.75" y1="11.75" x2="0.25" y2="0.25"></line>
+                    </svg>
+                </span>
+            </button>
+</div>
+    <div class="chatbox__body chat-list js-chat-list">
+       
+           <div ng-repeat="message in list">
+               <div ng-hide="message.UserId==userId"><div class="chatbox__body__message chatbox__body__message--left" ng-show="message.flag=='NewUserJoined'">
+    <img src="https://randomuser.me/api/portraits/thumb/men/83.jpg" alt="Picture" />
+    <p>{{message.name}} joined the conversation Id : {{message.UserId}}</p>
+</div></div>
+             
+               <div class="chatbox__body__message chatbox__body__message--left" ng-show="message.flag=='UserExit'">
+                   <img src="https://s3.amazonaws.com/uifaces/faces/twitter/brad_frost/128.jpg" alt="Picture" />
+                   <p>{{message.name}} Exit the conversation Id : {{message.UserId}}</p>
+               </div>
+              
+               <!--<div class="chatbox__body__message chatbox__body__message--left" ng-show="message.flag=='ChatMessage'">
+                   <img src="https://randomuser.me/api/portraits/thumb/women/83.jpg" alt="Picture" />
+                   <p>Message : {{message.message}}</p>
+               </div>-->
+               <div ng-show="message.flag=='ChatMessage'">
+                   <div ng-class="userId==message.codeSender ? 'chatbox__body__message chatbox__body__message--right' : 'chatbox__body__message chatbox__body__message--left'">
+                       <img src="https://randomuser.me/api/portraits/thumb/women/83.jpg" alt="Picture" />
+                       <p>{{message.message}}{{value}}</p>
+                   </div>
+               </div>
+              
+            </div>
+    </div>
+ 
+    <textarea class="chatbox__message" placeholder="Write something interesting" ng-model="textMessage"></textarea>
+</div>
