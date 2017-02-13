@@ -21,6 +21,11 @@
                 return th._user.userId;
             else return 0;
         };
+        th.getUserName = function () {
+            if(th._user!=null)
+                return th._user.name;
+            else return '';
+        };
         /**
          * Destroy session
          */

@@ -1,9 +1,11 @@
-<div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4" ng-controller="ChatCtrl">
+<div class="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-4 col-sm-offset-4" ng-controller="FeedCtrl">
     <!-- TWEET WRAPPER START -->
     <div class="twt-wrapper">
-        <div class="panel panel-info">
-            <div class="panel-heading"> Twitter Feed Example </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading"> Twitter Feed Example                 <span class="pull-right">{{count}} users active</span> 
+</div>
             <div class="panel-body">
+                
                 <textarea class="form-control" placeholder="Enter here for tweet..." rows="3" ng-model="text"></textarea>
                 <br>
                 <button class="btn btn-primary btn-sm pull-right" ng-click="send()">Tweet</button>
@@ -11,15 +13,15 @@
                 <hr>
                 <ul class="media-list">
                     <li ng-repeat="val in messages">
-                        <div class="media" ng-show="val.flag=='ChatMessage'">
+                        <div class="media" ng-show="val.flag=='Message'">
                             <div class="media-body"> <span class="text-muted pull-right">
-                                            <small class="text-muted">30 min ago</small>
-                                        </span> <strong class="text-success">@ {{val.codeSender}}</strong>
-                                <p> {{val.message}} <a href="#"># consectetur adipiscing </a>. </p>
+                                            <small class="text-muted">{{val.dateTime}}</small>
+                                        </span> <strong class="text-success">@ {{val.name}}</strong>
+                                <p> {{val.message}} </p>
                             </div>
                         </div>
                     </li>
-                </ul> <span class="text-danger">237K users active</span> </div>
+                </ul> </div>
         </div>
     </div>
     <!-- TWEET WRAPPER END -->

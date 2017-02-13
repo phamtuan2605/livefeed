@@ -1,35 +1,32 @@
 'use strict';
-angular.module('mkTweet').controller('ChatCtrl', ['$scope', 'ChatService', 'Auth', function ($scope, ChatService, Auth) {
-    $scope.messagesWs = [];
+angular.module('mkTweet').controller('FeedCtrl', ['$scope', 'FeedService', 'Auth', function ($scope, FeedService, Auth) {
     $scope.messages = [];
-    
-            $scope.messages.push(messageFormationObj(JSON.stringify({
-                flag:'ChatMessage',
-            message: 'hello',
-            codeSender: Auth.getUserId()
-        })));
-
-    ChatService.connect();
-    ChatService.subscribe(function (messagesWs) {
-        $scope.messages.push(messageFormationObj(messagesWs));
+$scope.count=0;
+    FeedService.connect();
+    var j;
+    FeedService.subscribe(function (m) {
+        j=messageFormationObj(m);
+        if(j.count)
+            $scope.count=j.count;
+        $scope.messages.unshift(messageFormationObj(m));
         $scope.$apply();
     });
     $scope.connect = function () {
         ChatService.connect();
     }
     $scope.send = function () {
-        ChatService.send(JSON.stringify({
-            message: $scope.text,
-            codeSender: Auth.getUserId()
+        FeedService.send(JSON.stringify({
+            name: Auth.getUserName(),
+            id: Auth.getUserId(),
+            message: $scope.text
         }));
         $scope.text = "";
     }
-
-    function messageFormationObj(messagesWs) {
-        return angular.fromJson(messagesWs);
+    function messageFormationObj(m) {
+        return angular.fromJson(m);
     }
   }]);
-angular.module('mkTweet').factory('ChatService', ['Auth', function (Auth) {
+angular.module('mkTweet').factory('FeedService', ['Auth', function (Auth) {
     var service = {};
     service.connect = function () {
         if (service.ws) {
@@ -37,11 +34,10 @@ angular.module('mkTweet').factory('ChatService', ['Auth', function (Auth) {
         }
         var personId = (Math.ceil(Math.random() * 9));
         //         var ws = new WebSocket("ws://localhost/mk/api/chat?name=pramod&code=pr@&userId=" + Auth.getUserId());
-        var ws = new WebSocket("ws://localhost/mk/api/chat?name=pramod&code=pr@&userId=" + personId);
+        
+        var ws = new WebSocket("ws://localhost:54464/api/livefeed?name="+Auth.getUserName()+"+&id=" + Auth.getUserId());
         ws.onopen = function (event) {
-            service.callback({
-                status: 'connected'
-            });
+           console.log("connected");
         };
         ws.onerror = function (event) {
             service.callback({
