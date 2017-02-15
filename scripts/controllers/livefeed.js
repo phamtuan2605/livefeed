@@ -35,7 +35,7 @@ angular.module('mkTweet').factory('FeedService', ['Auth', function (Auth) {
         var personId = (Math.ceil(Math.random() * 9));
         //         var ws = new WebSocket("ws://localhost/mk/api/chat?name=pramod&code=pr@&userId=" + Auth.getUserId());
         
-        var ws = new WebSocket("ws://localhost:54464/api/livefeed?name="+Auth.getUserName()+"+&id=" + Auth.getUserId());
+        var ws = new WebSocket("ws://localhost:50293/api/livefeed?name="+Auth.getUserName()+"+&id=" + Auth.getUserId());
         ws.onopen = function (event) {
            console.log("connected");
         };
